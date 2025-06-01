@@ -2,7 +2,7 @@
 $stressCPU = {
     param(
         [int]$targetPercent = 80,
-        [int]$durationMinutes = 5
+        [int]$durationMinutes = 10
     )
     
     $cpuCores = (Get-WmiObject Win32_ComputerSystem).NumberOfLogicalProcessors
@@ -35,7 +35,7 @@ $stressCPU = {
 }
 
 # Start the stress test for 5 minutes
-$mainJob = Start-Job -ScriptBlock $stressCPU -ArgumentList @(80, 5)
+$mainJob = Start-Job -ScriptBlock $stressCPU -ArgumentList @($targetPercent, $durationMinutes)
 
 # To monitor
 Receive-Job $mainJob -Wait
